@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <p>
+    <a href="/books">Home</a> 
+    <a href="/logout">Logout</a>
+    </p>
+    <div style="width:45%; display:inline-block;">
+    <h1>{{book.title}}</h1>
+    <h2>Author:{{author.author}}</h2>
+    <h3>Reviews:</h3>
+    {% for review in reviewz %}
+    <hr>
+    <p>Ratings: {{review.rating}}</p>
+    <p><a href="/users/{{review.users.id}}">{{review.users.first_name}}</a> said :{{review.comments}}</p>
+    <p>{{review.created_at}}</p>
+    {% endfor %}
+
+    </div>
+    <div style="width:45%; display:inline-block; vertical-align:top;">
+        <p>Add a Review:</p>
+        {% if messages %}
+            {% for message in messages %}
+            <p style="color:red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="/add_review" method="post">
+            {% csrf_token %}
+            <textarea name="review"></textarea>
+            <p>Rating: <select name="stars">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select></p>
+            <input type="submit">
+            <input type="hidden" name="bookid" value="{{book.id}}">
+        </form>
+    </div>
+</body>
+</html>

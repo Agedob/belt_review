@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>add books</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <a href="/books">Home</a> 
+    <a href="/logout">Logout</a>
+    <h2>Add a New Book Title and a Review:</h2>
+    {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="/adding_book" method="post">
+        {% csrf_token %}
+        <label for="title">Book Title:<input type="text" name="title"></label>
+        <label for="author_list">Choose from our list of authors
+            <select name="author">
+            <!-- for loop though db -->
+            {% for review in reviewz %}
+            <option>{{review.author}}</option>
+            {% endfor %}
+            </select></label>
+        <label for="new_auth">Add new author<input type="text" name="new_auth"></label>
+        <label for="reviewzz"><textarea name="review"></textarea></label>
+        <label for="stars"> rating 1-5 <select name="stars">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+        </select></label>
+        <input type="submit">
+    </form>
+</body>
+</html>
